@@ -5,18 +5,17 @@
 - [Python 3](https://www.python.org/downloads/release/python-365/)
 
 
-
 #### How to use [util.py](util.py)
 
 - create file `example_server.py`:
 
 ```python
-from util import SimpleServer
+import util
 
 def add(x, y):
     return x * y
 
-server = SimpleServer(port=8000, verbose=True)
+server = util.SimpleServer(port=8000, verbose=True)
 server.register_function(add)
 server.wait()
 ```
@@ -24,9 +23,9 @@ server.wait()
 - create file `example_client.py`:
 
 ```python
-from util import SimpleClient
+import util
 
-client = SimpleClient(port=8000)
+client = util.SimpleClient(port=8000, retry=True)
 print("available functions: ")
 print(client.list_functions())
 

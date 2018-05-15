@@ -1,16 +1,11 @@
-from threading import Thread
-from xmlrpc.server import SimpleXMLRPCServer
-from xmlrpc.client import ServerProxy
-
-import signal, sys, time
-
-import argparse
+import threading, xmlrpc.server, xmlrpc.client
+import argparse, signal, sys, time
 
 class SimpleServer:
     def __init__(self, host="localhost", port=8000, verbose=True):
         # create server listening on host:port
         self.verbose = verbose
-        self.server = SimpleXMLRPCServer((host, port), logRequests=verbose)
+        self.server = xmlrpc.server.SimpleXMLRPCServer((host, port), logRequests=verbose)
 
         # register introspection functions:
         # - system.listMethods
@@ -20,7 +15,7 @@ class SimpleServer:
 
         # run server listener in background thread
         # - daemon: is main thread ends, this thread halts
-        self.server_thread = Thread(target=self.server.serve_forever)
+        self.server_thread = threading.Thread(target=self.server.serve_forever)
         self.server_thread.daemon = True
         self.server_thread.start()
 
@@ -59,7 +54,7 @@ class SimpleServer:
         while True: time.sleep(10000)
 
 class SimpleClient:
-    def __init__(self, host="localhost", port=8000, retry=True):
+    def __init__(self, host="localhost", port=8000, retry=False):
         # create server url
         url = "http://" + host + ":" + str(port)
 
@@ -67,7 +62,7 @@ class SimpleClient:
         connected = False
         while not connected:
             try:
-                self.client = ServerProxy(url)
+                self.client = xmlrpc.client.ServerProxy(url)
                 _ = self.list_functions()
                 connected = True
 
@@ -109,7 +104,15 @@ def parse_args():
     More info: https://docs.python.org/3.6/library/argparse.html
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", dest="id", type=int)
+    parser.add_argument("-i", dest="id", type=int, required=True)
     parser.add_argument("-c", dest="children", type=int, default=[], action="append")
     args = parser.parse_args()
-    return args.id, args.children
+
+    # get id and children
+    id = args.id
+    children = args.children
+    print("ID: " + str(id))
+    print("CHILDREN: " + str(children))
+
+    # return id and children
+    return id, children
