@@ -1,5 +1,11 @@
 # docker-workshop
 
+#### Prerequisites
+
+- [Python 3](https://www.python.org/downloads/release/python-365/)
+
+
+
 #### How to use [util.py](util.py)
 
 - create file `example_server.py`:
