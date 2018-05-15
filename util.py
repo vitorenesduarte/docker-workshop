@@ -4,6 +4,8 @@ from threading import Thread
 import signal, sys, time
 import xmlrpclib
 
+import argparse
+
 class SimpleServer:
     def __init__(self, host="localhost", port=8000, verbose=True):
         # create server listening on host:port
@@ -92,3 +94,19 @@ class SimpleClient:
     """
     def list_functions(self):
         return [f for f in self.client.system.listMethods() if not f.startswith("system.")]
+
+
+def parse_args():
+    """
+    Parse command-line arguments:
+    Returns:
+    - port
+    - list of neighbors
+
+    Usage: PROG -p 8000 -n 1 -n 2
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-p", dest="port", type=int, default=8000)
+    parser.add_argument("-n", dest="neighbors", type=int, default=[], action="append")
+    args = parser.parse_args()
+    return args.port, args.neighbors
