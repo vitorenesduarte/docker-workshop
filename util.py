@@ -27,11 +27,11 @@ class SimpleServer:
         # shutdown gracefully on SIGINT
         signal.signal(signal.SIGINT, self.__signal_handler__)
 
-    """
-    Shutdown on SIGINT.
-    (internal use)
-    """
     def __signal_handler__(self, signal, frame):
+        """
+        Shutdown on SIGINT.
+        (internal use)
+        """
         if self.verbose:
             print("\n")
             print("CTRL+C was pressed... Shutting down!")
@@ -40,22 +40,22 @@ class SimpleServer:
         self.server_thread.join()
         sys.exit(0)
 
-    """
-    Register function passed as argument.
-    """
     def register_function(self, fun):
+        """
+        Register function passed as argument.
+        """
         self.server.register_function(fun)
 
-    """
-    List functions registered, including introspection functions.
-    """
     def list_functions(self):
+        """
+        List functions registered, including introspection functions.
+        """
         return self.server.system_listMethods()
 
-    """
-    Wait forever.
-    """
     def wait(self):
+        """
+        Wait forever.
+        """
         while True: time.sleep(10000)
 
 class SimpleClient:
@@ -82,19 +82,18 @@ class SimpleClient:
                     # if not retry, raise the exception
                     raise e
 
-    """
-    Magic method dispatcher.
-    """
     def __getattr__(self, name):
+        """
+        Magic method dispatcher.
+        """
         # see: https://github.com/python/cpython/blob/3.6/Lib/xmlrpc/client.py#L1468-L1470
         return self.client.__getattr__(name)
 
-    """
-    List functions registered in the server.
-    """
     def list_functions(self):
+        """
+        List functions registered in the server.
+        """
         return [f for f in self.client.system.listMethods() if not f.startswith("system.")]
-
 
 def parse_args():
     """
@@ -102,8 +101,7 @@ def parse_args():
     Returns:
     - port
     - list of neighbors
-
-    Usage: PROG -p 8000 -n 1 -n 2
+    Usage: PROG -p 3333 -n 1 -n 2
     """
     parser = argparse.ArgumentParser()
     parser.add_argument("-p", dest="port", type=int, default=8000)
