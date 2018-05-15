@@ -20,7 +20,7 @@ server.wait()
 ```python
 from util import SimpleClient
 
-client = SimpleClient(port=8000, retry=True)
+client = SimpleClient(port=8000)
 print("available functions: ")
 print(client.list_functions())
 
@@ -31,13 +31,13 @@ print("5 + 2 = " + str(client.add(5, 2)))
 - in one terminal:
 
 ```bash
-$ python example_server.py
+$ python example_client.py
 ```
 
 - in another terminal:
 
 ```bash
-$ python example_client.py
+$ python example_server.py
 ```
 
-- you can now gracefully stop the first terminal with CTRL+C
+(you can now gracefully stop this terminal with CTRL+C)

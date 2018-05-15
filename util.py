@@ -57,7 +57,7 @@ class SimpleServer:
         while True: time.sleep(10000)
 
 class SimpleClient:
-    def __init__(self, host="localhost", port=8000, retry=False):
+    def __init__(self, host="localhost", port=8000, retry=True):
         # create server url
         url = "http://" + host + ":" + str(port)
 
