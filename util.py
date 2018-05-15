@@ -57,12 +57,28 @@ class SimpleServer:
         while True: time.sleep(10000)
 
 class SimpleClient:
-    def __init__(self, host="localhost", port=8000):
+    def __init__(self, host="localhost", port=8000, retry=False):
         # create server url
         url = "http://" + host + ":" + str(port)
 
         # connect to server
-        self.client = xmlrpclib.ServerProxy(url)
+        connected = False
+        while not connected:
+            try:
+                self.client = xmlrpclib.ServerProxy(url)
+                _ = self.list_functions()
+                connected = True
+
+            except Exception as e:
+                print("Server " + url + " not connected yet.")
+
+                if retry:
+                    # try again in a second
+                    print("Trying again in 1 second.")
+                    time.sleep(1)
+                else:
+                    # if not retry, raise the exception
+                    raise e
 
     """
     Magic method dispatcher.

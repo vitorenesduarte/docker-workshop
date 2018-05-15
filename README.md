@@ -20,7 +20,7 @@ server.wait()
 ```python
 from util import SimpleClient
 
-client = SimpleClient(port=8000)
+client = SimpleClient(port=8000, retry=True)
 print("available functions: ")
 print(client.list_functions())
 
