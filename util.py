@@ -1,8 +1,8 @@
-from SimpleXMLRPCServer import SimpleXMLRPCServer, list_public_methods
 from threading import Thread
+from xmlrpc.server import SimpleXMLRPCServer
+from xmlrpc.client import ServerProxy
 
 import signal, sys, time
-import xmlrpclib
 
 import argparse
 
@@ -67,7 +67,7 @@ class SimpleClient:
         connected = False
         while not connected:
             try:
-                self.client = xmlrpclib.ServerProxy(url)
+                self.client = ServerProxy(url)
                 _ = self.list_functions()
                 connected = True
 
@@ -99,12 +99,17 @@ def parse_args():
     """
     Parse command-line arguments:
     Returns:
-    - port
-    - list of neighbors
-    Usage: PROG -p 3333 -n 1 -n 2
+    - id
+    - children ids
+    Usage:
+        PROG -i 0 -c 1
+        PROG -i 1 -c 2
+        PROG -i 2
+
+    More info: https://docs.python.org/3.6/library/argparse.html
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument("-p", dest="port", type=int, default=8000)
-    parser.add_argument("-n", dest="neighbors", type=int, default=[], action="append")
+    parser.add_argument("-i", dest="id", type=int)
+    parser.add_argument("-c", dest="children", type=int, default=[], action="append")
     args = parser.parse_args()
-    return args.port, args.neighbors
+    return args.id, args.children

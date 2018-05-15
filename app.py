@@ -1,4 +1,4 @@
 import util
-port, neighbors = util.parse_args()
-print(port)
-print(neighbors)
+id, children = util.parse_args()
+print(id)
+print(children)

@@ -31,7 +31,7 @@ print("5 + 2 = " + str(client.add(5, 2)))
 - in one terminal, start the client:
 
 ```bash
-$ python example_client.py
+$ python3 example_client.py
 ```
 
 By default, the client retries to connect to the server every second.
@@ -39,7 +39,7 @@ By default, the client retries to connect to the server every second.
 - in another terminal, start the server:
 
 ```bash
-$ python example_server.py
+$ python3 example_server.py
 ```
 
 You can now gracefully stop this terminal with CTRL+C.
