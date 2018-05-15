@@ -32,7 +32,7 @@ class SimpleServer:
     def __signal_handler__(self, signal, frame):
         if self.verbose:
             print("\n")
-            print("CRTL+C was pressed... Shutting down!")
+            print("CTRL+C was pressed... Shutting down!")
 
         self.server.shutdown()
         self.server_thread.join()

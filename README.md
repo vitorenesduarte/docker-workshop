@@ -39,3 +39,5 @@ $ python example_server.py
 ```bash
 $ python example_client.py
 ```
+
+- you can now gracefully stop the first terminal with CTRL+C
