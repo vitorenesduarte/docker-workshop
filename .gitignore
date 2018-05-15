@@ -1,0 +1,4 @@
+*.DS_Store
+*.pyc
+example_client.py
+example_server.py
