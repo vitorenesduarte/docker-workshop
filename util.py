@@ -1,8 +1,11 @@
 import threading, xmlrpc.server, xmlrpc.client
 import argparse, signal, sys, time
 
+DEFAULT_HOST = "0.0.0.0"
+DEFAULT_PORT = 8000
+
 class SimpleServer:
-    def __init__(self, host="localhost", port=8000, verbose=True):
+    def __init__(self, host=DEFAULT_HOST, port=DEFAULT_PORT, verbose=True):
         # create server listening on host:port
         self.verbose = verbose
         self.server = xmlrpc.server.SimpleXMLRPCServer(
@@ -58,7 +61,7 @@ class SimpleServer:
         while True: time.sleep(10000)
 
 class SimpleClient:
-    def __init__(self, host="localhost", port=8000, retry=False):
+    def __init__(self, host=DEFAULT_HOST, port=DEFAULT_PORT, retry=False):
         # create server url
         url = "http://" + host + ":" + str(port)
 
@@ -102,7 +105,7 @@ def parse_args():
     - children ids
     Usage:
         PROG -i 0 -c 1
-        PROG -i 1 -c 2
+        PROG -i1 -c2
         PROG -i 2
 
     More info: https://docs.python.org/3.6/library/argparse.html
