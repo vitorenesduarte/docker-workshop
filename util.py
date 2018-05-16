@@ -5,7 +5,11 @@ class SimpleServer:
     def __init__(self, host="localhost", port=8000, verbose=True):
         # create server listening on host:port
         self.verbose = verbose
-        self.server = xmlrpc.server.SimpleXMLRPCServer((host, port), logRequests=verbose)
+        self.server = xmlrpc.server.SimpleXMLRPCServer(
+            (host, port),
+            logRequests=verbose,
+            allow_none=True
+        )
 
         # register introspection functions:
         # - system.listMethods
@@ -62,7 +66,7 @@ class SimpleClient:
         connected = False
         while not connected:
             try:
-                self.client = xmlrpc.client.ServerProxy(url)
+                self.client = xmlrpc.client.ServerProxy(url, allow_none=True)
                 _ = self.list_functions()
                 connected = True
 
