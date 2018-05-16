@@ -12,8 +12,9 @@ def forward(l):
 
 def send(l):
     print(str(id) + " received: " + str(l))
-    l.append(id)
-    forward(l)
+    if not id in l:
+        l.append(id)
+        forward(l)
 
 # create server
 server = util.SimpleServer(port=BASE_PORT + id, verbose=True)
