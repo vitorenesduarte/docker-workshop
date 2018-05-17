@@ -34,7 +34,7 @@ Remove the `sleeper` from `docker-compose.yml`:
 version: "3"
 services:
   app:
-  	build: .
+    build: .
 ```
 
 Run `docker-compose up --build` and check [http://0.0.0.0:5000/](http://0.0.0.0:5000/).
