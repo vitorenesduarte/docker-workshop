@@ -1,5 +1,5 @@
 FROM python:alpine
 
-COPY hello.py /
+COPY app.py /
 
-CMD python hello.py
+CMD python app.py

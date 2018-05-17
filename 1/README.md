@@ -116,14 +116,14 @@ hello world!
 
 But this is not how we write apps, right?
 
-Let's then create a file named `hello.py` with:
+Let's then create a file named `app.py` with:
 ```python
 print("hello world!")
 ```
 
 Verify it is okay:
 ```bash
-$ python hello.py
+$ python app.py
 hello world!
 ```
 
@@ -132,9 +132,9 @@ And modify `Dockerfile` to:
 ```bash
 FROM python:alpine
 
-COPY hello.py /
+COPY app.py /
 
-CMD python hello.py
+CMD python app.py
 ```
 
 Let's build the image again:
@@ -146,11 +146,11 @@ Notice we didn't indicate which file to use.
 Docker tries to find a file named `Dockerfile` in
 the directory passed as argument.
 
-Verify `hello.py` was indeed copied to the docker image:
+Verify `app.py` was indeed copied to the docker image:
 
 ```bash
-$ docker run vitorenesduarte/tutorial:hello ls | grep hello
-hello.py
+$ docker run vitorenesduarte/tutorial:hello ls | grep app
+app.py
 ```
 
 Let's run it again:
@@ -167,7 +167,7 @@ Create file `docker-compose.yml` with:
 ```bash
 version: "3"
 services:
-  hello:
+  app:
     build: .
 ```
 
@@ -175,4 +175,21 @@ Now build and run with:
 
 ```bash
 $ docker-compose up --build
+```
+
+Change `docker-compose.yml` to:
+
+```bash
+version: "3"
+services:
+  app:
+    build: .
+  sleeper:
+    build: .
+    command: sleep 10
+```
+
+And again, in another terminal:
+```bash
+$ docker ps
 ```

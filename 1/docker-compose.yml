@@ -1,4 +1,7 @@
 version: "3"
 services:
-  hello:
+  app:
     build: .
+  sleeper:
+    build: .
+    command: sleep 10
