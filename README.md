@@ -4,6 +4,7 @@
 
 - [Docker](https://www.docker.com/community-edition)
 - [Python 3](https://www.python.org/downloads/release/python-365/)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
 The workshop is divided in several parts:
 
