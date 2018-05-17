@@ -1,4 +1,4 @@
-# docker-workshop
+# Docker/Kubernetes NECC Workshop - 23/05/2018
 
 #### Prerequisites
 
