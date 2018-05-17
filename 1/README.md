@@ -142,7 +142,7 @@ Let's build the image again:
 $ docker build -t vitorenesduarte/tutorial:hello .
 ```
 
-Note how we didn't indicate which file to use.
+Notice we didn't indicate which file to use.
 Docker tries to find a file named `Dockerfile` in
 the directory passed as argument.
 
@@ -160,3 +160,19 @@ hello world!
 ```
 
 __[slide 7]__
+
+__[slide 8]__
+
+Create file `docker-compose.yml` with:
+```bash
+version: "3"
+services:
+  hello:
+    build: .
+```
+
+Now build and run with:
+
+```bash
+$ docker-compose up --build
+```
