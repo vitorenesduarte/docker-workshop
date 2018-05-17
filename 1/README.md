@@ -77,32 +77,21 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 6e6be0c8f31c        python:alpine       "sleep 10"          Less than a second ago   Up 1 second                             eloquent_lichterman
 ```
 
-### Let's create simple "Hello World!" app
+### Let's create simple container
 
-Create a file named `hello.py` with:
-```python
-print("hello world!")
-```
+Our first `Dockerfile`:
 
-Verify it is okay:
-```bash
-$ python hello.py
-hello world!
-```
-
-#### Our first Dockerfile
-
-Create a file named `Dockerfile` with:
 ```bash
 FROM python:alpine
 
-COPY hello.py /
+CMD python -c 'print("hello world!")'
 ```
 
-Let's now build the docker image with a repository and tag, as in `python:alpine`
-(__syntax__ `docker build -t IMAGE DIR`):
+Let's now build the docker image with a repository and tag,
+as in `python:alpine`
+(__syntax__ `docker build -f FILE -t IMAGE DIR`):
 ```bash
-$ docker build -t vitorenesduarte/tutorial:hello .
+$ docker build -f Dockerfile -t vitorenesduarte/tutorial:hello .
 ```
 
 And check that the new image is in the list of images:
@@ -113,6 +102,44 @@ vitorenesduarte/tutorial   hello               49aa76850e83        About a minut
 python                     alpine              8eb1c554687d        3 weeks ago          90.4MB
 ```
 
+Let's run our app:
+```bash
+$ docker run vitorenesduarte/tutorial:hello
+hello world!
+```
+
+But this is not how we write apps, right?
+
+Let's then create a file named `hello.py` with:
+```python
+print("hello world!")
+```
+
+Verify it is okay:
+```bash
+$ python hello.py
+hello world!
+```
+
+And modify `Dockerfile` to:
+
+```bash
+FROM python:alpine
+
+COPY hello.py /
+
+CMD python hello.py
+```
+
+Let's build the image again:
+```bash
+$ docker build -t vitorenesduarte/tutorial:hello .
+```
+
+Note how we didn't indicate which file to use.
+Docker tries to find a file named `Dockerfile` in
+the directory passed as argument.
+
 Verify `hello.py` was indeed copied to the docker image:
 
 ```bash
@@ -120,22 +147,7 @@ $ docker run vitorenesduarte/tutorial:hello ls | grep hello
 hello.py
 ```
 
-Let's run our app:
-```bash
-$ docker run vitorenesduarte/tutorial:hello python hello.py
-hello world!
-```
-
-We can avoid always passing the command `python app.py` by adding a new line to our `Dockerfile`:
-```bash
-FROM python:alpine
-
-COPY hello.py /
-
-CMD ["python", "hello.py"]
-```
-
-Build the image again, and simply run:
+Let's run it again:
 ```bash
 docker run vitorenesduarte/tutorial:hello
 hello world!
