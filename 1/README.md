@@ -1,5 +1,7 @@
 # Part 1
 
+__[slide 4]__
+
 Check the list of docker images:
 ```bash
 $ docker images
@@ -17,6 +19,8 @@ $ docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 python              alpine              8eb1c554687d        3 weeks ago         90.4MB
 ```
+
+__[slide 5]__
 
 Run the our first container:
 ```bash
@@ -76,6 +80,8 @@ $ docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED                  STATUS              PORTS               NAMES
 6e6be0c8f31c        python:alpine       "sleep 10"          Less than a second ago   Up 1 second                             eloquent_lichterman
 ```
+
+__[slide 5]__
 
 ### Let's create simple container
 
@@ -152,3 +158,5 @@ Let's run it again:
 docker run vitorenesduarte/tutorial:hello
 hello world!
 ```
+
+__[slide 7]__
