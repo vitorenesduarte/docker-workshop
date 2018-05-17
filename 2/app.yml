@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app
+  labels:
+    foo: vitor
+spec:
+  containers:
+  - name: app
+    image: vitorenesduarte/tutorial
