@@ -10,9 +10,7 @@ spec:
     image: vitorenesduarte/tutorial
     env:
     - name: ID
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.name
+      value: "1"
 ---
 apiVersion: v1
 kind: Pod
@@ -26,6 +24,4 @@ spec:
     image: vitorenesduarte/tutorial
     env:
     - name: ID
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.name
+      value: "2"

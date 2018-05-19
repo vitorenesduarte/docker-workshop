@@ -130,6 +130,8 @@ $ kubectl get pods --watch
 
 #### Create a load balancer so that we can access our app:
 
+__[slide 12]__
+
 Create file `app-service.yml`:
 ```yml
 apiVersion: v1
@@ -188,10 +190,7 @@ COPY app.py /
 CMD python app.py $ID
 ```
 
-As identifier, we'll use the pod name.
-
-We can change `app.yml` so that we pass the the pod name as environment variable
-`$ID`:
+Change `app.yml` so that we run two pods with different `$ID`:
 ```yml
 apiVersion: v1
 kind: Pod
@@ -205,9 +204,7 @@ spec:
     image: vitorenesduarte/tutorial
     env:
     - name: ID
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.name
+      value: "1"
 ---
 apiVersion: v1
 kind: Pod
@@ -221,9 +218,7 @@ spec:
     image: vitorenesduarte/tutorial
     env:
     - name: ID
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.name
+      value: "2"
 ```
 
 Now go to [http://EXTERNAL-IP:3333](http://EXTERNAL-IP:3333), and see the identifier changing.
