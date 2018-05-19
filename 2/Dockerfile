@@ -4,4 +4,4 @@ RUN pip install flask
 
 COPY app.py /
 
-CMD python app.py
+CMD python app.py ${ID}

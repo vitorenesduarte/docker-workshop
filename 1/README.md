@@ -164,7 +164,7 @@ __[slide 7]__
 __[slide 8]__
 
 Create file `docker-compose.yml` with:
-```bash
+```yml
 version: "3"
 services:
   app:
@@ -179,7 +179,7 @@ $ docker-compose up --build
 
 Change `docker-compose.yml` to:
 
-```bash
+```yml
 version: "3"
 services:
   app:

@@ -30,7 +30,7 @@ $ python app.py
 ```
 
 Remove the `sleeper` from `docker-compose.yml`:
-```bash
+```yml
 version: "3"
 services:
   app:
@@ -43,7 +43,7 @@ It doesn't work. Why?
 
 We need to expose and publish the container's port `5000` to the host (our machine):
 
-```bash
+```yml
 version: "3"
 services:
   app:
@@ -62,7 +62,7 @@ Run `docker-compose up` and [http://0.0.0.0:3333/](http://0.0.0.0:3333/).
 __[slide 11]__
 
 Create file `app.yml` (simply based on [Kubernetes 101](https://kubernetes.io/docs/user-guide/walkthrough/)):
-```bash
+```yml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -128,22 +128,102 @@ $ kubectl create -f app.yml
 $ kubectl get pods --watch
 ```
 
-#### Some magic so that we can access our app:
+#### Create a load balancer so that we can access our app:
+
+Create file `app-service.yml`:
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5000
+    targetPort: 3333
+  selector:
+    foo: vitor
+```
 
 ```bash
-$ kubectl expose -f app.yml --type=LoadBalancer --port 5000 --target-port=3333
-$ kubectl get service app
-NAME      TYPE           CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
-app       LoadBalancer   10.7.241.40   <pending>     5000:31171/TCP   53s
+$ kubectl create -f app-service.yml
+$ kubectl get service app-service
+TODO
 ```
 
 Watch until `EXTERNAL-IP` is no longer `<pending>:
 ```bash
-$ kubectl get service app --watch
+$ kubectl get service app-service --watch
 ```
 
-And then go to IP:3333.
+And then go to [http://EXTERNAL-IP:3333](http://EXTERNAL-IP:3333):
 
-TODO.
-Add an id to the app,
-and show load balancing working.
+#### Does the load balancing work?
+
+Let's slightly change our app, so that each pod has an identifier.
+
+```python
+from flask import Flask
+app = Flask(__name__)
+
+import sys
+id = sys.argv[1] if len(sys.argv) > 1 else "ups!"
+
+@app.route("/")
+def hello():
+    return "Hello World! (from " + id + ")"
+
+app.run(host="0.0.0.0", debug=True)
+```
+
+Change the `Dockerfile`, so that we can pass the pod identifier
+as an environment variable `$ID`:
+```bash
+FROM python:alpine
+
+RUN pip install flask
+
+COPY app.py /
+
+CMD python app.py $ID
+```
+
+As identifier, we'll use the pod name.
+
+We can change `app.yml` so that we pass the the pod name as environment variable
+`$ID`:
+```yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-1
+  labels:
+    foo: vitor
+spec:
+  containers:
+  - name: app
+    image: vitorenesduarte/tutorial
+    env:
+    - name: ID
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-2
+  labels:
+    foo: vitor
+spec:
+  containers:
+  - name: app
+    image: vitorenesduarte/tutorial
+    env:
+    - name: ID
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+```
+
+Now go to [http://EXTERNAL-IP:3333](http://EXTERNAL-IP:3333), and see the identifier changing.
