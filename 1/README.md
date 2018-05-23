@@ -1,6 +1,6 @@
 # Part 1
 
-__[slide 4]__
+__[slide 5]__
 
 Check the list of docker images:
 ```bash
@@ -20,7 +20,7 @@ REPOSITORY          TAG                 IMAGE ID            CREATED             
 python              alpine              8eb1c554687d        3 weeks ago         90.4MB
 ```
 
-__[slide 5]__
+__[slide 6]__
 
 Run the our first container:
 ```bash
@@ -81,7 +81,7 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 6e6be0c8f31c        python:alpine       "sleep 10"          Less than a second ago   Up 1 second                             eloquent_lichterman
 ```
 
-__[slide 5]__
+__[slide 7]__
 
 ### Let's create simple container
 
@@ -159,9 +159,9 @@ docker run vitorenesduarte/tutorial:hello
 hello world!
 ```
 
-__[slide 7]__
-
 __[slide 8]__
+
+__[slide 9]__
 
 Create file `docker-compose.yml` with:
 ```yml

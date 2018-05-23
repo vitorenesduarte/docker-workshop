@@ -1,6 +1,6 @@
 # Part 2
 
-__[slide 10]__
+__[slide 11]__
 
 (you can copy the files from part 1 to another folder, and start from there)
 
@@ -59,7 +59,7 @@ Run `docker-compose up` and [http://0.0.0.0:3333/](http://0.0.0.0:3333/).
 
 #### Deploy it on Kubernetes
 
-__[slide 11]__
+__[slide 12]__
 
 Create file `app.yml` (simply based on [Kubernetes 101](https://kubernetes.io/docs/user-guide/walkthrough/)):
 ```yml
@@ -137,7 +137,7 @@ $ kubectl exec app curl localhost:5000
 
 #### Create a load balancer so that we can access our app:
 
-__[slide 12]__
+__[slide 13]__
 
 (
 Something similar to what we're doing next, would be:
@@ -263,3 +263,7 @@ $ kubectl logs -f app-2
 
 Now go to [http://EXTERNAL-IP:3333](http://EXTERNAL-IP:3333), and see the identifier changing,
 and see the logs of the two pods.
+
+__[slide 14]__
+
+__[slide 15]__
