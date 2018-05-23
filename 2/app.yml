@@ -8,6 +8,7 @@ spec:
   containers:
   - name: app
     image: vitorenesduarte/tutorial
+    imagePullPolicy: Always
     env:
     - name: ID
       value: "1"
@@ -22,6 +23,7 @@ spec:
   containers:
   - name: app
     image: vitorenesduarte/tutorial
+    imagePullPolicy: Always
     env:
     - name: ID
       value: "2"

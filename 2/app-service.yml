@@ -5,7 +5,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 5000
-    targetPort: 3333
+  - port: 3333
+    targetPort: 5000
   selector:
     foo: vitor

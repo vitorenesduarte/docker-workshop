@@ -76,7 +76,7 @@ spec:
 ```
 
 (Compared to 101, we added `foo: vitor` as a label,
-because `kubectl expose`, which we will use later, requires it)
+because we'll need it later, when we want to have this pod behind a service)
 
 And deploy it on Kubernetes.
 
@@ -126,11 +126,29 @@ $ kubectl delete pod app
 $ kubectl get pods
 $ kubectl create -f app.yml
 $ kubectl get pods --watch
+$ kubectl logs -f app
+```
+
+Add `RUN apk update && apk add curl` to the `Dockerfile`,
+build and deploy again, so that you can:
+```bash
+$ kubectl exec app curl localhost:5000
 ```
 
 #### Create a load balancer so that we can access our app:
 
 __[slide 12]__
+
+(
+Something similar to what we're doing next, would be:
+```bash
+$ kubectl expose -f app.yml \
+    --name=app-service \
+    --type=LoadBalancer \
+    --port 3333 \
+    --target-port 5000
+```
+)
 
 Create file `app-service.yml`:
 ```yml
@@ -141,8 +159,8 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 5000
-    targetPort: 3333
+  - port: 3333
+    targetPort: 5000
   selector:
     foo: vitor
 ```
@@ -150,7 +168,6 @@ spec:
 ```bash
 $ kubectl create -f app-service.yml
 $ kubectl get service app-service
-TODO
 ```
 
 Watch until `EXTERNAL-IP` is no longer `<pending>:
@@ -202,6 +219,7 @@ spec:
   containers:
   - name: app
     image: vitorenesduarte/tutorial
+    imagePullPolicy: Always
     env:
     - name: ID
       value: "1"
@@ -216,9 +234,32 @@ spec:
   containers:
   - name: app
     image: vitorenesduarte/tutorial
+    imagePullPolicy: Always
     env:
     - name: ID
       value: "2"
 ```
 
-Now go to [http://EXTERNAL-IP:3333](http://EXTERNAL-IP:3333), and see the identifier changing.
+(Note `imagePullPolicy: Always`: this will force Kubernetes to pull a new image,
+even if it already has it)
+
+Let's build a new image, push it, delete the previous pod, and deploy the pods again:
+```bash
+$ docker build -t vitorenesduarte/tutorial .
+$ docker push vitorenesduarte/tutorial
+$ kubectl delete pod app
+$ kubectl create -f app.yml
+$ kubectl get pods --watch
+```
+
+In two different terminals:
+```bash
+$ kubectl logs -f app-1
+```
+
+```bash
+$ kubectl logs -f app-2
+```
+
+Now go to [http://EXTERNAL-IP:3333](http://EXTERNAL-IP:3333), and see the identifier changing,
+and see the logs of the two pods.
