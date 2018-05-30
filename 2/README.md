@@ -80,7 +80,11 @@ because we'll need it later, when we want to have this pod behind a service)
 
 And deploy it on Kubernetes.
 
-(for that you need `CONFIG`, a Kubernetes configuration file, which I will provide)
+For that you need `CONFIG`, a Kubernetes configuration file, which I will provide.
+Alternatively, you can create a cluster on your machine using
+[minikube](https://github.com/kubernetes/minikube)
+or on some cloud provider
+([Google Cloud](https://cloud.google.com/) offers some free credits).
 
 ```bash
 $ kubectl --kubeconfig=CONFIG create -f app.yml
@@ -113,7 +117,7 @@ Let's check the manual.
 $ kubectl config --help | sed -n '5,7p'
 ```
 
-We can simply have `$KUBECONFIG` environment variable
+One way is to simply have `$KUBECONFIG` environment variable
 pointing to the `CONFIG` file, e.g.:
 ```bash
 $ export KUBECONFIG=$(pwd)/CONFIG
