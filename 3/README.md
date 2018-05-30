@@ -1,7 +1,5 @@
 # Part 3
 
-__[slide 12]__
-
 (again, you can copy the files from one of the previous parts, and start from there)
 
 (the following assumes `python3`)
